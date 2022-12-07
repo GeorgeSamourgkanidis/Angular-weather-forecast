@@ -1,0 +1,23 @@
+@use "@angular/material" as mat;
+@include mat.core();
+
+//Custom Material Components themes
+
+.mat-mdc-slide-toggle {
+  .mdc-switch__icons {
+    display: none;
+  }
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-form-field-flex {
+    align-items: center !important;
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+  .mat-mdc-form-field-icon-prefix > button {
+    padding: 12px;
+    box-sizing: content-box;
+  }
+}

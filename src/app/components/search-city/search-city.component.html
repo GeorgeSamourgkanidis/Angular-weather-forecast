@@ -1,0 +1,10 @@
+<div class="mx-auto mt-4 w-[fit-content]">
+  <mat-form-field appearance="outline">
+    <!-- <mat-label>Search</mat-label> -->
+    <button matPrefix>
+      <mat-icon>location_searching</mat-icon>
+    </button>
+    <input matInput type="text" placeholder="Your city name" [formControl]="searchControl" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>

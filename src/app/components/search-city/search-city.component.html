@@ -4,7 +4,14 @@
     <button matPrefix>
       <mat-icon>location_searching</mat-icon>
     </button>
-    <input matInput type="text" placeholder="Your city name" [formControl]="searchControl" />
+    <input
+      matInput
+      type="text"
+      placeholder="Your city name"
+      [formControl]="searchControl"
+      (keyup.enter)="handleRequestWheatherData()"
+    />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
+  <app-spinner *ngIf="loadingCurrent | async"></app-spinner>
 </div>

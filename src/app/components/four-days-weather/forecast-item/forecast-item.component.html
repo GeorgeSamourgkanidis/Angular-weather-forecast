@@ -1,6 +1,7 @@
 <mat-card [ngClass]="{ cardContainer: data }" (click)="data && handleDayClicked()">
   <mat-card-content class="!flex justify-center">
     <div class="flex flex-col items-center">
+      <!-- Show Date using Pipe with format that we got from input -->
       <h2>{{ date | date : dateFormat }}</h2>
       <img class="w-12" src="{{ 'http://openweathermap.org/img/w/' + icon + '.png' }}" />
       <h3>{{ maxTemp }}</h3>

@@ -24,7 +24,7 @@ export class ForecastItemComponent implements OnInit {
   maxTemp: number;
 
   ngOnInit(): void {
-    // if data was passed (all days) find min max
+    // if data was passed (all days tab) find min max
     if (this.data) {
       // Initialize first min max
       this.minTemp = this.data[0].main.temp_min;
@@ -39,7 +39,7 @@ export class ForecastItemComponent implements OnInit {
   }
 
   handleDayClicked() {
-    // Call parent function to show day Details
+    // Call parent function to show day Details (clickable only on details tab)
     this.dayClickedEmitter.emit(this.data);
   }
 }

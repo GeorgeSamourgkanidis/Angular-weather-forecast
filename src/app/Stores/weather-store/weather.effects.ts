@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of, throwError } from 'rxjs';
 import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { GetWeatherService } from 'src/app/data/apis/weather/get-weather.service';
+import { NotifyService } from 'src/app/utils/services/notification.service';
 import { WeatherActions } from './weather.actions';
 
 @Injectable()
@@ -13,9 +14,30 @@ export class WeatherEffects {
       mergeMap((payload) =>
         this.getWeatherService.getCurrentWeatherByCity(payload['city']).pipe(
           map((response) => {
-            return { type: WeatherActions.getCurrentDataSuccess, city: payload['city'], currentWeather: response };
+            return { type: WeatherActions.getCurrentDataSuccess, currentWeather: response };
           }),
           catchError((err) => {
+            this.notifyService.openErrorSwal(err.error.message);
+            return of({
+              type: WeatherActions.getCurrentDataFail,
+              error: err
+            });
+          })
+        )
+      )
+    );
+  });
+
+  getCurrentDataByLongitudeLatitude$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WeatherActions.getCurrentDataByLongitudeLatitude),
+      mergeMap((payload) =>
+        this.getWeatherService.getCurrentWeatherByLongitudeLatitude(payload['longitude'], payload['latitude']).pipe(
+          map((response) => {
+            return { type: WeatherActions.getCurrentDataSuccess, currentWeather: response };
+          }),
+          catchError((err) => {
+            this.notifyService.openErrorSwal(err.error.message);
             return of({
               type: WeatherActions.getCurrentDataFail,
               error: err
@@ -32,9 +54,10 @@ export class WeatherEffects {
       mergeMap((payload) =>
         this.getWeatherService.getForecast5DataWeatherByCity(payload['city']).pipe(
           map((response) => {
-            return { type: WeatherActions.getFourDaysDataSuccess, city: payload['city'], forecast5: response };
+            return { type: WeatherActions.getFourDaysDataSuccess, forecast5: response };
           }),
           catchError((err) => {
+            this.notifyService.openErrorSwal(err.error.message);
             return of({
               type: WeatherActions.getFourDaysDataFail,
               error: err
@@ -45,5 +68,31 @@ export class WeatherEffects {
     );
   });
 
-  constructor(private actions$: Actions, private getWeatherService: GetWeatherService) {}
+  getFourDaysDataByLongitudeLatitude$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WeatherActions.getFourDaysDataByLongitudeLatitude),
+      mergeMap((payload) =>
+        this.getWeatherService
+          .getForecast5DataWeatherByLongitudeLatitude(payload['longitude'], payload['latitude'])
+          .pipe(
+            map((response) => {
+              return { type: WeatherActions.getFourDaysDataSuccess, forecast5: response };
+            }),
+            catchError((err) => {
+              this.notifyService.openErrorSwal(err.error.message);
+              return of({
+                type: WeatherActions.getCurrentDataFail,
+                error: err
+              });
+            })
+          )
+      )
+    );
+  });
+
+  constructor(
+    private actions$: Actions,
+    private getWeatherService: GetWeatherService,
+    private notifyService: NotifyService
+  ) {}
 }

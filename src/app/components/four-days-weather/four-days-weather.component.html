@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center">
   <!-- Search Input -->
-  <app-search-city (searchCityEmitter)="handleGetCityForecast($event)"></app-search-city>
+  <app-search-city (searchCityEmitter)="handleGetCityForecast($event)" (gpsClicked)="handleGetDataByGps()"></app-search-city>
 
   <h2 class="mt-8 text-white">Forecast for 4 days</h2>
 
@@ -51,4 +51,6 @@
       </div>
     </mat-card-content>
   </mat-card>
+
+  <button (click)="handleNavigateToCurrentWeather()" mat-button class="mt-4 !bg-white">Go to Current Weather</button>
 </div>

@@ -1,7 +1,7 @@
 <div class="mx-auto mt-4 w-[fit-content]">
   <mat-form-field appearance="outline" class="bg-white">
     <!-- <mat-label>Search</mat-label> -->
-    <button matPrefix class="flex">
+    <button matPrefix class="flex" (click)="handleGpsClicked()">
       <mat-icon>location_searching</mat-icon>
     </button>
     <input
@@ -11,6 +11,8 @@
       [formControl]="searchControl"
       (keyup.enter)="handleRequestWheatherData()"
     />
-    <mat-icon matSuffix>search</mat-icon>
+    <button matSuffix (click)="handleRequestWheatherData()" class="flex">
+      <mat-icon>search</mat-icon>
+    </button>
   </mat-form-field>
 </div>

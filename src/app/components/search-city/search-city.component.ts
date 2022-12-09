@@ -13,25 +13,36 @@ export class SearchCityComponent implements OnInit, OnDestroy {
   @Output()
   searchCityEmitter: EventEmitter<string> = new EventEmitter();
 
+  @Output()
+  gpsClicked: EventEmitter<void> = new EventEmitter();
+
   searchControl = new FormControl();
-  city$: Subscription;
+  citySubscription$: Subscription;
   cityShown: string;
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
     // handling subscriptions
-    this.city$ = this.store.select(selectCity).subscribe((city) => (this.cityShown = city));
+    this.citySubscription$ = this.store.select(selectCity).subscribe((city) => {
+      // every time we call get data Api update shown city and the input formcontrol value
+      this.cityShown = city;
+      this.searchControl.patchValue(city);
+    });
   }
 
   ngOnDestroy(): void {
-    this.city$.unsubscribe();
+    this.citySubscription$.unsubscribe();
   }
 
   handleRequestWheatherData() {
-    // only search city data if its different
+    // only search city data if input is different than shown city
     if (this.searchControl.value !== this.cityShown) {
       this.searchCityEmitter.emit(this.searchControl.value);
     }
+  }
+
+  handleGpsClicked() {
+    this.gpsClicked.emit();
   }
 }

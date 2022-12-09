@@ -1,13 +1,15 @@
 export interface WeatherState {
+  city: string;
   loadingCurrent: boolean;
-  currentData: [];
+  currentData: {};
   loadingForecast: boolean;
-  forecastData: [];
+  forecastData: {};
 }
 
 export const initialState: WeatherState = {
+  city: '',
   loadingCurrent: false,
-  currentData: [],
+  currentData: {},
   loadingForecast: false,
-  forecastData: []
+  forecastData: {}
 };

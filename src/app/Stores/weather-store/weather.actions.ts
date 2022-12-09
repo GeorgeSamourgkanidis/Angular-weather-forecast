@@ -13,9 +13,9 @@ export const enum WeatherActions {
   
 }
 export const getCurrentData = createAction(WeatherActions.getCurrentData, props<{ city: string }>());
-export const getCurrentDataSuccess = createAction(WeatherActions.getCurrentDataSuccess, props<{ currentWeather: CurrentWeather }>());
+export const getCurrentDataSuccess = createAction(WeatherActions.getCurrentDataSuccess, props<{ city: string, currentWeather: any }>());
 export const getCurrentDataFail = createAction(WeatherActions.getCurrentDataFail);
 
 export const getFourDaysData = createAction(WeatherActions.getFourDaysData, props<{ city: string }>());
-export const getFourDaysDataSuccess = createAction(WeatherActions.getFourDaysDataSuccess, props<{ forecast5: Forecast5Weather }>());
+export const getFourDaysDataSuccess = createAction(WeatherActions.getFourDaysDataSuccess, props<{ city: string, forecast5: any }>());
 export const getFourDaysDataFail = createAction(WeatherActions.getFourDaysDataFail);

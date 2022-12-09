@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as dotenv from 'dotenv';
 import { ROUTES_STRINGS } from './modules/app-routing.module';
 import { WeatherActions } from './Stores/weather-store/weather.actions';
 
@@ -13,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    //If you set the url manually check location and dispatch to get new Data
+    // If you set the url manually check location and dispatch to get new Data
     switch (window.location.pathname) {
       case `/${ROUTES_STRINGS.CURRENT}`:
         this.store.dispatch({ type: WeatherActions.getCurrentData, city: 'athens' });

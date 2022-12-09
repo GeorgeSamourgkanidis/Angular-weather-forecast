@@ -16,10 +16,8 @@ const _weatherReducer = createReducer(
     ...state,
     loadingCurrent: true
   })),
-  on(getCurrentDataSuccess, (state, currentWeather) => {
-    console.log('currentWeather', currentWeather);
-
-    return { ...state, loadingCurrent: false };
+  on(getCurrentDataSuccess, (state, { city, currentWeather }) => {
+    return { ...state, city: city, loadingCurrent: false, currentData: currentWeather };
   }),
   on(getCurrentDataFail, (state) => ({
     ...state,
@@ -30,10 +28,13 @@ const _weatherReducer = createReducer(
     ...state,
     loadingForecast: true
   })),
-  on(getFourDaysDataSuccess, (state, forecast5) => {
-    console.log('forecastWeather', forecast5);
+  on(getFourDaysDataSuccess, (state, { city, forecast5 }) => {
+    const days = 4;
 
-    return { ...state, loadingForecast: false };
+    // Keep the first 4 days (each day has 24/3 = 8 sets of data every 3 hours)
+    const forecastData = { ...forecast5, list: forecast5.list.slice(0, days * 8) };
+
+    return { ...state, city: city, loadingForecast: false, forecastData: forecastData };
   }),
   on(getFourDaysDataFail, (state) => ({
     ...state,

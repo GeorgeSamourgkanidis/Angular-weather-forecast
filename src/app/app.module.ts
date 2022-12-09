@@ -16,9 +16,10 @@ import { SearchCityComponent } from './components/search-city/search-city.compon
 import { HttpClientModule } from '@angular/common/http';
 import { SingleDayWeatherComponent } from './components/single-day-weather/single-day-weather.component';
 import { FourDaysWeatherComponent } from './components/four-days-weather/four-days-weather.component';
+import { ForecastItemComponent } from './components/four-days-weather/forecast-item/forecast-item.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SearchCityComponent, SingleDayWeatherComponent, FourDaysWeatherComponent],
+  declarations: [AppComponent, HeaderComponent, SearchCityComponent, SingleDayWeatherComponent, FourDaysWeatherComponent, ForecastItemComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

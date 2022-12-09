@@ -13,7 +13,7 @@ export class WeatherEffects {
       mergeMap((payload) =>
         this.getWeatherService.getCurrentWeatherByCity(payload['city']).pipe(
           map((response) => {
-            return { type: WeatherActions.getCurrentDataSuccess, currentWeather: response };
+            return { type: WeatherActions.getCurrentDataSuccess, city: payload['city'], currentWeather: response };
           }),
           catchError((err) => {
             return of({
@@ -32,7 +32,7 @@ export class WeatherEffects {
       mergeMap((payload) =>
         this.getWeatherService.getForecast5DataWeatherByCity(payload['city']).pipe(
           map((response) => {
-            return { type: WeatherActions.getFourDaysDataSuccess, forecast5: response };
+            return { type: WeatherActions.getFourDaysDataSuccess, city: payload['city'], forecast5: response };
           }),
           catchError((err) => {
             return of({

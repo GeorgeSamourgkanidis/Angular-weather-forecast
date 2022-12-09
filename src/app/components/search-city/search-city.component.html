@@ -1,7 +1,7 @@
 <div class="mx-auto mt-4 w-[fit-content]">
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="bg-white">
     <!-- <mat-label>Search</mat-label> -->
-    <button matPrefix>
+    <button matPrefix class="flex">
       <mat-icon>location_searching</mat-icon>
     </button>
     <input
@@ -13,5 +13,4 @@
     />
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
-  <app-spinner *ngIf="loadingCurrent | async"></app-spinner>
 </div>

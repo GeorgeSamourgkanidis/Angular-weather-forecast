@@ -1,0 +1,8 @@
+@import "mixins";
+@import "colors";
+
+.goBackButton {
+  margin-top: 1rem;
+  color: white;
+  @include background-with-hover($body-background);
+}

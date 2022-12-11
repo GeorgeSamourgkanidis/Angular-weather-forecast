@@ -1,0 +1,6 @@
+@mixin background-with-hover($backgroundColor) {
+  background-color: $backgroundColor !important;
+  &:hover {
+    filter: brightness(80%);
+  }
+}

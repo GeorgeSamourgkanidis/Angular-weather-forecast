@@ -2,6 +2,8 @@
 @import "tailwindcss/utilities";
 
 @import "mat-theme";
+@import "colors";
+@import "mixins";
 
 * {
   margin: 0;
@@ -13,7 +15,7 @@
 
 body {
   min-height: 100vh;
-  background-color: #75B4E3;
+  background-color: $body-background;
   font-size: 14px;
   color: #333;
   box-sizing: border-box;
@@ -28,4 +30,15 @@ body {
   h6 {
     font-weight: 600;
   }
+}
+
+.weatherContainer {
+  margin-top: 1rem;
+  width: 50%;
+  background-color: white !important;
+}
+
+.navigateButton {
+  margin-top: 1rem;
+  @include background-with-hover(white);
 }

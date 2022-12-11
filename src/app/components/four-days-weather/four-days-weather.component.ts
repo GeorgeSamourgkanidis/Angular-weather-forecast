@@ -51,6 +51,7 @@ export class FourDaysWeatherComponent implements OnInit {
   }
 
   handleGetDataByGps() {
+    // get gps location
     navigator.geolocation.getCurrentPosition((position) => {
       const longitude = position.coords.longitude;
       const latitude = position.coords.latitude;

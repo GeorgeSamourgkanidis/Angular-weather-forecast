@@ -1,42 +1,50 @@
 <div class="flex flex-col items-center">
   <!-- Search Input -->
-  <app-search-city (searchCityEmitter)="handleGetCityCurrentWeather($event)" (gpsClicked)="handleGetDataByGps()"></app-search-city>
+  <app-search-city
+    (searchCityEmitter)="handleGetCityCurrentWeather($event)"
+    (gpsClicked)="handleGetDataByGps()"
+  ></app-search-city>
 
   <h2 class="mt-8 text-white">Current Weather</h2>
 
-  <mat-card class="w-1/2 mt-4 !border !border-gray-200 !bg-white">
+  <!-- Global class -->
+  <mat-card class="weatherContainer">
     <mat-card-content class="!flex justify-center">
-      <ng-container *ngIf="!(loadingCurrent$ | async)" class="flex justify-center">
-        <ng-container *ngIf="currentData$ | async as data">
-          <ng-container *ngIf="(data | json) != '{}'">
-            <div class="w-full flex justify-between items-center">
-              <img class="w-40" src="{{ 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png' }}" />
+      <!-- If no Loading show weather else spinner -->
+      <ng-container *ngIf="!(loadingCurrent$ | async); else loading" class="flex justify-center">
+        <!-- If we have data show weather of No Data message -->
+        <ng-container *ngIf="currentData$ | async as data; else noData">
+          <div class="w-full flex justify-between items-center flex-wrap">
+            <img class="w-40" src="{{ 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png' }}" />
 
-              <div class="flex flex-col items-center">
-                <div class="flex items-baseline gap-1">
-                  <h1>{{ data.main.temp }}</h1>
-                  <h2>C</h2>
-                </div>
-                <h2>{{ data.name }}</h2>
-                <span>{{ data.weather[0].description }}</span>
+            <div class="flex flex-col items-center">
+              <div class="flex items-baseline gap-1">
+                <h1>{{ data.main.temp }}</h1>
+                <h2>C</h2>
               </div>
-
-              <div class="flex flex-col">
-                <span> <span class="font-medium">Wind: </span> {{ data.wind.speed }}m/s</span>
-                <span> <span class="font-medium">Humidity: </span> {{ data.main.humidity }}%</span>
-                <span> <span class="font-medium">Pressure: </span> {{ data.main.pressure }}mmHg</span>
-                <span> <span class="font-medium">Feels like: </span> {{ data.main.feels_like }}</span>
-              </div>
+              <h2>{{ data.name }}</h2>
+              <span>{{ data.weather[0].description }}</span>
             </div>
-          </ng-container>
+
+            <div class="flex flex-col">
+              <span> <span class="font-medium">Wind: </span> {{ data.wind.speed }}m/s</span>
+              <span> <span class="font-medium">Humidity: </span> {{ data.main.humidity }}%</span>
+              <span> <span class="font-medium">Pressure: </span> {{ data.main.pressure }}mmHg</span>
+              <span> <span class="font-medium">Feels like: </span> {{ data.main.feels_like }}</span>
+            </div>
+          </div>
         </ng-container>
       </ng-container>
-
-      <div *ngIf="loadingCurrent$ | async" class="flex justify-center">
-        <app-spinner></app-spinner>
-      </div>
     </mat-card-content>
   </mat-card>
 
-  <button (click)="handleNavigateToForecast5()" mat-button class="mt-4 !bg-white">Go to Forecast</button>
+  <button (click)="handleNavigateToForecast5()" mat-button class="navigateButton">Go to Forecast</button>
 </div>
+
+<ng-template #noData>
+  <h2>No Data</h2>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

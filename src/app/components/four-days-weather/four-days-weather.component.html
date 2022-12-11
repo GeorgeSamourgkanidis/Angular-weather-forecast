@@ -1,56 +1,61 @@
 <div class="flex flex-col items-center">
   <!-- Search Input -->
-  <app-search-city (searchCityEmitter)="handleGetCityForecast($event)" (gpsClicked)="handleGetDataByGps()"></app-search-city>
+  <app-search-city
+    (searchCityEmitter)="handleGetCityForecast($event)"
+    (gpsClicked)="handleGetDataByGps()"
+  ></app-search-city>
 
   <h2 class="mt-8 text-white">Forecast for 4 days</h2>
 
-  <mat-card class="w-1/2 mt-4 !border !border-gray-200 !bg-white">
+  <!-- Global class -->
+  <mat-card class="weatherContainer">
     <mat-card-content class="!flex justify-center flex-wrap">
-      <!-- if not loading -->
-      <ng-container *ngIf="!(loadingForecast$ | async)" class="flex justify-center">
-        <!-- if data exist -->
-        <ng-container *ngIf="forecastData$ | async as data">
-          <ng-container *ngIf="(data | json) != '{}'">
-            <!-- if a day is not clicked show all -->
-            <ng-container *ngIf="!showDayDetails">
-              <div *ngFor="let _ of [].constructor(data.list.length / 8); let dayIndex = index" class="gap-2">
-                <!-- Show n numbers of days dynamically (24/3 = 8 elements each day) -->
-                <app-forecast-item
-                  (dayClickedEmitter)="handleDayClicked($event)"
-                  [data]="data.list.slice(dayIndex * 8, (dayIndex + 1) * 8)"
-                  [date]="data.list[dayIndex * 8].dt_txt"
-                  [dateFormat]="'EEE dd MMM'"
-                  [icon]="data.list[dayIndex * 8].weather[0].icon"
-                ></app-forecast-item>
-              </div>
-            </ng-container>
-
-            <!-- if a day was clicked show day details -->
-            <div *ngIf="showDayDetails" class="flex flex-col items-center">
-              <div class="flex flex-wrap gap-2">
-                <ng-container *ngFor="let time of dayDetails; let timeIndex = index">
-                  <app-forecast-item
-                    [date]="time.dt_txt"
-                    [dateFormat]="'HH:mm'"
-                    [icon]="time.weather[0].icon"
-                    [minTemp]="time.main.temp_max"
-                    [maxTemp]="time.main.temp_min"
-                  ></app-forecast-item>
-                </ng-container>
-              </div>
-
-              <button (click)="handleReturn()" mat-button class="!bg-blue-300 mt-4 !text-white">Go Back</button>
+      <!-- If no Loading show weather else spinner -->
+      <ng-container *ngIf="!(loadingForecast$ | async); else loading" class="flex justify-center">
+        <!-- If we have data show weather of No Data message -->
+        <ng-container *ngIf="forecastData$ | async as data; else noData">
+          <!-- if we are in show all days tab -->
+          <ng-container *ngIf="!showDayDetails">
+            <div *ngFor="let _ of [].constructor(data.list.length / 8); let dayIndex = index" class="gap-2">
+              <!-- Show n numbers of days dynamically (24/3 = 8 elements each day) -->
+              <app-forecast-item
+                (dayClickedEmitter)="handleDayClicked($event)"
+                [data]="data.list.slice(dayIndex * 8, (dayIndex + 1) * 8)"
+                [date]="data.list[dayIndex * 8].dt_txt"
+                [dateFormat]="'EEE dd MMM'"
+                [icon]="data.list[dayIndex * 8].weather[0].icon"
+              ></app-forecast-item>
             </div>
           </ng-container>
+
+          <!-- if a day was clicked show day details -->
+          <div *ngIf="showDayDetails" class="flex flex-col items-center">
+            <div class="flex flex-wrap gap-2">
+              <ng-container *ngFor="let time of dayDetails; let timeIndex = index">
+                <app-forecast-item
+                  [date]="time.dt_txt"
+                  [dateFormat]="'HH:mm'"
+                  [icon]="time.weather[0].icon"
+                  [minTemp]="time.main.temp_max"
+                  [maxTemp]="time.main.temp_min"
+                ></app-forecast-item>
+              </ng-container>
+            </div>
+
+            <button (click)="handleReturn()" mat-button class="goBackButton">Go Back</button>
+          </div>
         </ng-container>
       </ng-container>
-
-      <!-- if loading show spinner -->
-      <div *ngIf="loadingForecast$ | async" class="flex justify-center">
-        <app-spinner></app-spinner>
-      </div>
     </mat-card-content>
   </mat-card>
 
-  <button (click)="handleNavigateToCurrentWeather()" mat-button class="mt-4 !bg-white">Go to Current Weather</button>
+  <button (click)="handleNavigateToCurrentWeather()" mat-button class="navigateButton">Go to Current Weather</button>
 </div>
+
+<ng-template #noData>
+  <h2>No Data</h2>
+</ng-template>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

@@ -10,7 +10,7 @@ openWeatherApiKey: "<Your Key>"
 When you add your Key and run "npm install" you can run "npm run start"
 
 ## Used in the application
-Angular + Ngrx Store, Local Storage, Tailwind, Material Components, sweetalert2 (pop up notifications), Reactive Forms, Router, shared components
+Angular + Ngrx Store, Eslint, prettier, Local Storage, Tailwind, Material Components, sweetalert2 (pop up notifications), Reactive Forms, Router, shared components
 
 ## Could use
 Custom Pipes and directives but I only needed the built-in date pipe

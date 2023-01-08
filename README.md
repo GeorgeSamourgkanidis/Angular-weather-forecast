@@ -1,13 +1,7 @@
 # AngularWeatherChallenge
-
-## Warning
-Unfortunatly it was not possible to create a Demo since ApiKey is visible when we call them.
-Please add your OpenWeather Api Key inside src\environments\environment.ts
-
-openWeatherApiKey: "<Your Key>"
   
 ## How To Run
-When you add your Key and run "npm install" you can run "npm run start"
+Once you run "npm install" you can run "npm run start"
 
 ## Used in the application
 Angular + Ngrx Store, Eslint, prettier, Local Storage, Tailwind, Material Components, sweetalert2 (pop up notifications), Reactive Forms, Router, shared components
